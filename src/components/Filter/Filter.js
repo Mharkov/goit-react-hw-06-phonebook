@@ -16,19 +16,9 @@ Filter.propTypes = {
   value: PropTypes.string.isRequired,
 };
 
-const mapStateToProps = (state) => {
-  const { filter, items } = state.contacts;
-  const normalizedFilter = filter.toLowerCase();
-
-  const visibleTodos = items.filter(({ text }) =>
-    text.toLowerCase().includes(normalizedFilter)
-  );
-
-  return {
-    // items: state.contacts.items,
-    value: visibleTodos,
-  };
-};
+const mapStateToProps = (state) => ({
+  value: state.contacts.filter,
+});
 
 const mapDispatchToProps = (dispatch) => ({
   onFilter: (e) => dispatch(actions.conatactFilter(e.target.value)),

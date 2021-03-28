@@ -4,7 +4,7 @@ import styles from './ContactForm.module.css';
 import { connect } from 'react-redux';
 import * as actions from '../../redux/contact/contact-actions';
 
-const ContactForm = ({ onAdd, items }) => {
+const ContactForm = ({ onSubmit, items }) => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
@@ -28,7 +28,7 @@ const ContactForm = ({ onAdd, items }) => {
       return;
     }
 
-    onAdd(name, number);
+    onSubmit(name, number);
     setName('');
     setNumber('');
   };
@@ -51,7 +51,7 @@ const ContactForm = ({ onAdd, items }) => {
           Number
           <input
             className={styles.TaskEditor_input}
-            type="text"
+            type="tel"
             name="number"
             value={number}
             onChange={handleChangeNumber}
@@ -76,7 +76,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onAdd: (name, number) => dispatch(actions.contactAdd(name, number)),
+    onSubmit: (name, number) => dispatch(actions.contactAdd(name, number)),
   };
 };
 

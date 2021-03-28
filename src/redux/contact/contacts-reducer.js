@@ -25,6 +25,7 @@ const filter = (state = '', { type, payload }) => {
   switch (type) {
     case actionType.CHANGE_FILTER:
       return payload;
+
     default:
       return state;
   }
