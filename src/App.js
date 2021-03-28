@@ -5,19 +5,6 @@ import Filter from './components/Filter/Filter';
 import ContactList from './components/ContactList/ContactList';
 
 const App = ({ items }) => {
-  // useEffect(() => {
-  //   const todos = localStorage.getItem('newContacts');
-  //   const parsedTodos = JSON.parse(todos);
-
-  //   if (parsedTodos) {
-  //     setNewContacts(parsedTodos);
-  //   }
-  // }, []);
-
-  // useEffect(() => {
-  //   localStorage.setItem('newContacts', JSON.stringify(newContacts));
-  // }, [newContacts]);
-
   return (
     <>
       <h1>Phonebook</h1>

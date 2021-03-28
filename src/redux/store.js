@@ -1,14 +1,61 @@
-import { createStore, applyMiddleware, combineReducers } from 'redux';
-import { composeWithDevTools } from 'redux-devtools-extension';
+import {
+  configureStore,
+  getDefaultMiddleware,
+  combineReducers,
+} from '@reduxjs/toolkit';
+import logger from 'redux-logger';
+import {
+  persistStore,
+  persistReducer,
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+} from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 import counterReducer from './contact/contacts-reducer';
 
-const rootReducer = combineReducers({
-  contacts: counterReducer,
+const middleware = [
+  ...getDefaultMiddleware({
+    serializableCheck: {
+      ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+    },
+  }),
+  logger,
+];
+
+const PersistConfig = {
+  key: 'contacts',
+  storage,
+  blacklist: ['filter'],
+};
+
+// const rootReducer = combineReducers({
+//   contacts: persisterReducer(PersistConfig, counterReducer),
+// });
+
+// const persisterReducer = persistReducer(PersistConfig, rootReducer);
+
+const store = configureStore({
+  reducer: {
+    contacts: persistReducer(PersistConfig, counterReducer),
+  },
+  middleware: middleware,
+  devTools: process.env.NODE_ENV === 'development',
 });
 
-const store = createStore(rootReducer, composeWithDevTools());
+const persistor = persistStore(store);
 
-export default store;
+export default { store, persistor };
+
+// import { applyMiddleware, combineReducers } from 'redux';
+// const rootReducer = combineReducers({
+//   contacts: counterReducer,
+// });
+
+// const store = createStore(rootReducer, composeWithDevTools());
 
 // const initialState = {
 //   contacts: {
@@ -47,8 +94,8 @@ export default store;
 //         ...state,
 //         contacts: {
 //           ...state.contacts,
-//           items: state.contacts.items.filter((payload) =>
-//             payload.toLowerCase().includes(state.contacts.filters.toLowerCase())
+//           items: state.contacts.items.filter((name) =>
+//             name.toLowerCase().includes(state.contacts.filters.toLowerCase())
 //           ),
 //         },
 //       };

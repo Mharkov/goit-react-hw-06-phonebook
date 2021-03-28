@@ -21,7 +21,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onFilter: (e) => dispatch(actions.conatactFilter(e.target.value)),
+  onFilter: (e) => dispatch(actions.contactFilter(e.target.value)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Filter);
